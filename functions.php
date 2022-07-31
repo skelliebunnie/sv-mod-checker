@@ -133,14 +133,16 @@ function create_mod_data($data, $ignore=array()) {
 			if(array_key_exists("UniqueID", $dep) && !in_array($dep["UniqueID"], $ignore)) {
 				$depID = $dep["UniqueID"];
 
-				$req = ((array_key_exists("IsRequired", $dep) && $dep["IsRequired"] === true) || !array_key_exists("IsRequired", $dep)) ? true : false;
+				$req = true;
+				if(array_key_exists("IsRequired", $dep) && $dep["IsRequired"] == false) {
+					$req = false;
+				}
 
 				if(!array_key_exists($depID, $mod["dependsOn"])) {
 					$mod["dependsOn"][$depID] = array("id" => $depID, "base" => "", "required" => $req, "installed" => false);
 
 				} else if(array_key_exists($depID, $mod["dependsOn"]) && $req === true) {
 					$mod["dependsOn"][$depID]["required"] = true;
-					$mod["dependsOn"][$depID]["base"] = "";
 				}
 			}
 		}
@@ -149,26 +151,14 @@ function create_mod_data($data, $ignore=array()) {
 	return $mod;
 }
 
-function fix_bad_dep($dep, $id=null) {
-	if(!array_key_exists("id", $dep) && $id === null) {
-		return null;
-	}
-
-	if(!array_key_exists("id", $dep) && $id !== null) {
-		$dep["id"] = $id;
-	}
-
-	if(!array_key_exists("required", $dep)) {
-		$dep["required"] = false;
-	}
-
-	if(!array_key_exists("installed", $dep)) {
-		$dep["installed"] = false;
-	}
-
-	return $dep;
-}
-
 function sort_dependencies(array $a, array $b) {
-	return [$b['required'], $b['installed'], $b['base'], $b['id']] <=> [$a['required'], $a['installed'], $a['base'], $a['id']];
+	$aRes = 0; $bRes = 0;
+	if($a['required'] && !$a['installed']) { $aRes = 1; }
+	if(!$a['required'] && $a['installed']) { $aRes = -1; }
+	if(!$a['required'] && !$a['installed']) { $aRes = -2; }
+	if($b['required'] && !$b['installed']) { $bRes = 1; }
+	if(!$b['required'] && $b['installed']) { $bRes = -1; }
+	if(!$b['required'] && !$b['installed']) { $bRes = -2; }
+
+	return $bRes - $aRes;
 }

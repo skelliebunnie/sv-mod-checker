@@ -126,20 +126,22 @@ https://www.phptutorial.net/php-tutorial/php-array-destructuring/
 
 				$dependsOn = $mod["dependsOn"]; // dependencies for individual, specific mod
 
-				foreach($dependsOn as $dependency) {
-					$depID = array_key_exists("id",$dependency) ? $dependency["id"] : null;
+				foreach($dependsOn as $dep) {
+					$depID = array_key_exists("id",$dep) ? $dep["id"] : null;
 					$depBase = ($depID !== null && in_array_i($depID, array_keys($modIDs))) ? $modIDs[strtolower($depID)]["base"] : null;
-					$dep = fix_bad_dep($dependency, $depID);
 					$installed = $depBase !== null ? true : false;
 
-					if($dep !== null) {
+					if($depID !== null) {
+						if($depBase === null) {
+							$depBase = $depID;
+						}
 						// update the dependency in the "dependsOn" array for the mod
 						// AND the assoc. array we're working with now
-						$mods[$base][$modID]["dependsOn"][$depID]["installed"] = $installed;
+						$mods[$base]["children"][$modID]["dependsOn"][$depID]["installed"] = $installed;
 						$dep["installed"] = $installed;
 
 						if($installed) {
-							$mods[$base][$modID]["dependsOn"][$depID]["base"] = $depBase;
+							$mods[$base]["children"][$modID]["dependsOn"][$depID]["base"] = $depBase;
 							$dep["base"] = $depBase;
 						}
 
@@ -158,6 +160,7 @@ https://www.phptutorial.net/php-tutorial/php-array-destructuring/
 							// if the dependency as already been added, let's check to make sure the "required" state is true
 							// if any of the "child" mods do require it
 							$mods[$base]["dependsOn"][$depBase]["required"] = true;
+
 						}
 					}
 				}
@@ -312,6 +315,7 @@ https://www.phptutorial.net/php-tutorial/php-array-destructuring/
 		});
 	
 		const mods = <?php echo json_encode($mods); ?>;
+		console.log(mods);
 		
 		if(Object.keys(mods).length > 0) {
 			const reqMods = Object.keys(mods).filter(key => Object.keys(mods[key].requiredBy).length > 0);
