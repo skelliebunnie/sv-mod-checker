@@ -1,0 +1,11 @@
+ ✔ Some (required) mods are being listed as not installed, sometimes even when the same mod is listed as installed for the dependent mod! @done (22-07-30 15:45)
+   * EX// [MNF] Hisame Craftables lists both `spacechase0.jsonAssets` (not installed) and `JsonAssets` (installed). Hisame Craftables does have 2 "child" mods, and they both require the Json Assets mod, so I suspect somewhere either I'm checking an ID against a Name (obvious fail), or I'm checking for the existence of `spacechase0.jsonAssets` in $modIDs before it gets touched by the loop through all the mods (most likely).
+   * EX// Several mods list `DIGUS.ProducerFrameworkMod` as not being installed ... including the ProducerFrameworkMod
+   * EX// [JA] [FTM] Lumisteria Flowers and Crops is _also_ listing itself as "required, not installed"
+ ✔ Some mods (just SVE?) are listing the same mod Name (base) multiple times. Let's remove those duplicates. @done (22-07-30 17:22)
+ ✔ Add an input field so user can specify mod directory @done (22-07-29 22:11)
+ ✔ add a normalize/reset/whatever CSS @done (22-07-29 22:21)
+   * ended up using sanitize.css (https://csstools.github.io/sanitize.css/) based on this article: https://ageek.dev/css-resets
+ ✔ looks like I'm listing duplicate dependencies (at least SAAT twice for SVE) @done (22-07-30 18:35)
+ ✔ sort dependencies based on required & installed (required, not installed > required*, installed > not required*, installed > not required, not installed) @done (22-07-30 18:37)
+   *those might be reversed -- basically sorting is by: required > installed > base > id
