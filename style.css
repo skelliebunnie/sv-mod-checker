@@ -8,6 +8,11 @@ body {
 	padding: 2rem 4rem;
 }
 
+small {
+	font-size: 0.78rem;
+	color: dimgrey;
+}
+
 form {
 	display: flex;
 	align-items: center;
@@ -20,7 +25,7 @@ form * {
 
 form label { font-weight: 700; }
 
-form input { flex: 1 0 auto; }
+label[for="rootDirectory"] { flex: 1 0 auto; }
 
 form [type="submit"]:hover {
 	cursor: pointer;
@@ -217,3 +222,43 @@ li[data-required="true"][data-installed="true"] {
 }
 
 .msg-box p { font-size: 1.15rem; }
+
+[for="useDefaultPath"] { 
+	position: relative; 
+	margin-right: 1rem; 
+	margin-left: 1rem;
+}
+
+[for="useDefaultPath"] > i {
+	color: dodgerblue;
+	position: absolute;
+	right: 0;
+	bottom: 0.75rem;
+	z-index: 1;
+	pointer-events: none;
+}
+
+[name="useDefaultPath"] {
+	position: relative;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+[name="rootDirectory"] {
+	flex: 1;
+	width: 100%;
+}
+
+.hide-on-checked {
+	flex: 1 0 auto;
+	display: flex;
+	align-items: center;
+	transform-origin: left center;
+	transform: scale(1,1);
+	transition: all 0.3s ease-in-out;
+}
+
+.hide-on-checked.hide {
+	transform: scale(0,1);
+	transition: all 0.3s ease-in-out;
+}
