@@ -315,7 +315,6 @@ https://www.phptutorial.net/php-tutorial/php-array-destructuring/
 		});
 	
 		const mods = <?php echo json_encode($mods); ?>;
-		console.log(mods);
 		
 		if(Object.keys(mods).length > 0) {
 			const reqMods = Object.keys(mods).filter(key => Object.keys(mods[key].requiredBy).length > 0);
