@@ -1,5 +1,6 @@
 # Stardew Valley Mod Checker
-Simply open `index.php`! If your mods are installed at the default location (on Windows, `C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\Mods`), you'll see a list of all your mods with their dependencies. Dependencies are color-coded, and there's a key at the top.
+**You will need to download this and run it locally**
+Once downloaded, simply open `index.php`! If your mods are installed at the default location (on Windows, `C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\Mods`), you'll see a list of all your mods with their dependencies. Dependencies are color-coded based on whether or not they're required, and whether or not they're installed.
 
 If your mods are installed elsewhere, simply uncheck the "Use Default Path" checkbox, enter the path (to the Mods folder, not to a specific mod!) in the input field, and click "Get Mods".
 
